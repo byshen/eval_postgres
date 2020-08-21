@@ -361,8 +361,8 @@ DefineOpClass(CreateOpClassStmt *stmt)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(namespaceoid, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(namespaceoid));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(namespaceoid), privilege_to_string(ACL_CREATE));
 
 	/* Get necessary info about access method */
 	tup = SearchSysCache1(AMNAME, CStringGetDatum(stmt->amname));
@@ -742,8 +742,8 @@ DefineOpFamily(CreateOpFamilyStmt *stmt)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(namespaceoid, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(namespaceoid));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(namespaceoid), privilege_to_string(ACL_CREATE));
 
 	/* Get access method OID, throwing an error if it doesn't exist. */
 	amoid = get_index_am_oid(stmt->amname, false);

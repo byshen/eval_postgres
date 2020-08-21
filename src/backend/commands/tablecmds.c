@@ -11884,8 +11884,8 @@ ATExecChangeOwner(Oid relationOid, Oid newOwnerId, bool recursing, LOCKMODE lock
 				aclresult = pg_namespace_aclcheck(namespaceOid, newOwnerId,
 												  ACL_CREATE);
 				if (aclresult != ACLCHECK_OK)
-					aclcheck_error(aclresult, OBJECT_SCHEMA,
-								   get_namespace_name(namespaceOid));
+					aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+								   get_namespace_name(namespaceOid), privilege_to_string(ACL_CREATE));
 			}
 		}
 
@@ -14971,8 +14971,8 @@ RangeVarCallbackForAlterRelation(const RangeVar *rv, Oid relid, Oid oldrelid,
 		aclresult = pg_namespace_aclcheck(classform->relnamespace,
 										  GetUserId(), ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_SCHEMA,
-						   get_namespace_name(classform->relnamespace));
+			aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+						   get_namespace_name(classform->relnamespace), privilege_to_string(ACL_CREATE));
 		reltype = ((RenameStmt *) stmt)->renameType;
 	}
 	else if (IsA(stmt, AlterObjectSchemaStmt))

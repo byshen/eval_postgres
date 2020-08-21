@@ -94,8 +94,8 @@ DefineOperator(List *names, List *parameters)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(oprNamespace, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(oprNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(oprNamespace), privilege_to_string(ACL_CREATE));
 
 	/*
 	 * loop over the definition list and extract the information we need.

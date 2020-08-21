@@ -191,8 +191,8 @@ DefineType(ParseState *pstate, List *names, List *parameters)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(typeNamespace, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(typeNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(typeNamespace), privilege_to_string(ACL_CREATE));
 #endif
 
 	/*
@@ -773,8 +773,8 @@ DefineDomain(CreateDomainStmt *stmt)
 	aclresult = pg_namespace_aclcheck(domainNamespace, GetUserId(),
 									  ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(domainNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(domainNamespace), privilege_to_string(ACL_CREATE));
 
 	/*
 	 * Check for collision with an existing type name.  If there is one and
@@ -1173,8 +1173,8 @@ DefineEnum(CreateEnumStmt *stmt)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(enumNamespace, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(enumNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(enumNamespace), privilege_to_string(ACL_CREATE));
 
 	/*
 	 * Check for collision with an existing type name.  If there is one and
@@ -1379,8 +1379,8 @@ DefineRange(CreateRangeStmt *stmt)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(typeNamespace, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(typeNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(typeNamespace), privilege_to_string(ACL_CREATE));
 
 	/*
 	 * Look to see if type already exists.
@@ -3379,8 +3379,8 @@ AlterTypeOwner(List *names, Oid newOwnerId, ObjectType objecttype)
 											  newOwnerId,
 											  ACL_CREATE);
 			if (aclresult != ACLCHECK_OK)
-				aclcheck_error(aclresult, OBJECT_SCHEMA,
-							   get_namespace_name(typTup->typnamespace));
+				aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+							   get_namespace_name(typTup->typnamespace), privilege_to_string(ACL_CREATE));
 		}
 
 		AlterTypeOwner_oid(typeOid, newOwnerId, true);

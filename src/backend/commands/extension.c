@@ -2721,7 +2721,7 @@ AlterExtensionNamespace(const char *extensionName, const char *newschema, Oid *o
 	/* Permission check: must have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(nspOid, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA, newschema);
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA, newschema, privilege_to_string(ACL_CREATE));
 
 	/*
 	 * If the schema is currently a member of the extension, disallow moving

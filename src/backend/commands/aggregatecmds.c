@@ -107,8 +107,8 @@ DefineAggregate(ParseState *pstate,
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(aggNamespace, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(aggNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(aggNamespace), privilege_to_string(ACL_CREATE));
 
 	/* Deconstruct the output of the aggr_args grammar production */
 	if (!oldstyle)

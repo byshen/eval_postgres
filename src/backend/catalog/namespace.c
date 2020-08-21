@@ -578,8 +578,8 @@ RangeVarGetAndCheckCreationNamespace(RangeVar *relation,
 		/* Check namespace permissions. */
 		aclresult = pg_namespace_aclcheck(nspid, GetUserId(), ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_SCHEMA,
-						   get_namespace_name(nspid));
+			aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+						   get_namespace_name(nspid), privilege_to_string(ACL_CREATE));
 
 		if (retry)
 		{
@@ -2906,8 +2906,8 @@ LookupExplicitNamespace(const char *nspname, bool missing_ok)
 
 	aclresult = pg_namespace_aclcheck(namespaceId, GetUserId(), ACL_USAGE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   nspname);
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   nspname, privilege_to_string(ACL_USAGE));
 	/* Schema search hook for this lookup */
 	InvokeNamespaceSearchHook(namespaceId, true);
 
@@ -2942,8 +2942,8 @@ LookupCreationNamespace(const char *nspname)
 
 	aclresult = pg_namespace_aclcheck(namespaceId, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   nspname);
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   nspname, privilege_to_string(ACL_CREATE));
 
 	return namespaceId;
 }

@@ -627,8 +627,8 @@ get_other_operator(List *otherOp, Oid otherLeftTypeId, Oid otherRightTypeId,
 	aclresult = pg_namespace_aclcheck(otherNamespace, GetUserId(),
 									  ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(otherNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(otherNamespace), privilege_to_string(ACL_CREATE));
 
 	other_oid = OperatorShellMake(otherName,
 								  otherNamespace,

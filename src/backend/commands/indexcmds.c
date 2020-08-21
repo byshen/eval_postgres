@@ -651,8 +651,8 @@ DefineIndex(Oid relationId,
 		aclresult = pg_namespace_aclcheck(namespaceId, GetUserId(),
 										  ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_SCHEMA,
-						   get_namespace_name(namespaceId));
+			aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+						   get_namespace_name(namespaceId), privilege_to_string(ACL_CREATE));
 	}
 
 	/*

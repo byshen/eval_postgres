@@ -75,8 +75,8 @@ DefineCollation(ParseState *pstate, List *names, List *parameters, bool if_not_e
 
 	aclresult = pg_namespace_aclcheck(collNamespace, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(collNamespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(collNamespace), privilege_to_string(ACL_CREATE));
 
 	foreach(pl, parameters)
 	{

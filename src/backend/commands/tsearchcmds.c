@@ -431,8 +431,8 @@ DefineTSDictionary(List *names, List *parameters)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(namespaceoid, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(namespaceoid));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(namespaceoid), privilege_to_string(ACL_CREATE));
 
 	/*
 	 * loop over the definition list and extract the information we need.
@@ -989,8 +989,8 @@ DefineTSConfiguration(List *names, List *parameters, ObjectAddress *copied)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(namespaceoid, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(namespaceoid));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(namespaceoid), privilege_to_string(ACL_CREATE));
 
 	/*
 	 * loop over the definition list and extract the information we need.

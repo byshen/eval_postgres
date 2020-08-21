@@ -315,8 +315,8 @@ HandleFunctionRequest(StringInfo msgBuf)
 	 */
 	aclresult = pg_namespace_aclcheck(fip->namespace, GetUserId(), ACL_USAGE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(fip->namespace));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(fip->namespace), privilege_to_string(ACL_USAGE));
 	InvokeNamespaceSearchHook(fip->namespace, true);
 
 	aclresult = pg_proc_aclcheck(fid, GetUserId(), ACL_EXECUTE);

@@ -148,8 +148,8 @@ compute_return_type(TypeName *returnType, Oid languageOid,
 		aclresult = pg_namespace_aclcheck(namespaceId, GetUserId(),
 										  ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_SCHEMA,
-						   get_namespace_name(namespaceId));
+			aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+						   get_namespace_name(namespaceId), privilege_to_string(ACL_CREATE));
 		address = TypeShellMake(typname, namespaceId, GetUserId());
 		rettype = address.objectId;
 		Assert(OidIsValid(rettype));
@@ -960,8 +960,8 @@ CreateFunction(ParseState *pstate, CreateFunctionStmt *stmt)
 	/* Check we have creation rights in target namespace */
 	aclresult = pg_namespace_aclcheck(namespaceId, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_SCHEMA,
-					   get_namespace_name(namespaceId));
+		aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+					   get_namespace_name(namespaceId), privilege_to_string(ACL_CREATE));
 
 	/* Set default attributes */
 	isWindowFunc = false;

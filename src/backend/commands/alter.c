@@ -232,8 +232,8 @@ AlterObjectRename_internal(Relation rel, Oid objectId, const char *new_name)
 			aclresult = pg_namespace_aclcheck(namespaceId, GetUserId(),
 											  ACL_CREATE);
 			if (aclresult != ACLCHECK_OK)
-				aclcheck_error(aclresult, OBJECT_SCHEMA,
-							   get_namespace_name(namespaceId));
+				aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+							   get_namespace_name(namespaceId), privilege_to_string(ACL_CREATE));
 		}
 	}
 
@@ -742,8 +742,8 @@ AlterObjectNamespace_internal(Relation rel, Oid objid, Oid nspOid)
 		/* User must have CREATE privilege on new namespace */
 		aclresult = pg_namespace_aclcheck(nspOid, GetUserId(), ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_SCHEMA,
-						   get_namespace_name(nspOid));
+			aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+						   get_namespace_name(nspOid), privilege_to_string(ACL_CREATE));
 	}
 
 	/*
@@ -992,8 +992,8 @@ AlterObjectOwner_internal(Relation rel, Oid objectId, Oid new_ownerId)
 				aclresult = pg_namespace_aclcheck(namespaceId, new_ownerId,
 												  ACL_CREATE);
 				if (aclresult != ACLCHECK_OK)
-					aclcheck_error(aclresult, OBJECT_SCHEMA,
-								   get_namespace_name(namespaceId));
+					aclcheck_error_priv(aclresult, OBJECT_SCHEMA,
+								   get_namespace_name(namespaceId), privilege_to_string(ACL_CREATE));
 			}
 		}
 
