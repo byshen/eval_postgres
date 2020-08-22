@@ -582,8 +582,17 @@ ExecCheckRTPerms(List *rangeTable, bool ereport_on_violation)
 		{
 			Assert(rte->rtekind == RTE_RELATION);
 			if (ereport_on_violation)
-				aclcheck_error(ACLCHECK_NO_PRIV, get_relkind_objtype(get_rel_relkind(rte->relid)),
+			{
+				/*logenhance we do the best effort of reporting violating permissions*/
+				if (privilege_to_string(rte->requiredPerms) != NULL)
+					aclcheck_error_priv(ACLCHECK_NO_PRIV, get_relkind_objtype(get_rel_relkind(rte->relid)),
+						get_rel_name(rte->relid), privilege_to_string(rte->requiredPerms));
+				else
+					aclcheck_error(ACLCHECK_NO_PRIV, get_relkind_objtype(get_rel_relkind(rte->relid)),
 							   get_rel_name(rte->relid));
+
+			}
+				
 			return false;
 		}
 	}
