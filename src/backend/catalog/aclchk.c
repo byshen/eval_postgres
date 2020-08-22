@@ -3770,7 +3770,7 @@ aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
 
 				ereport(ERROR,
 						(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
-						 errmsg(msg, objectname)));
+						 errmsg(msg, objectname, privilegename)));
 				break;
 			}
 		case ACLCHECK_NOT_OWNER:
