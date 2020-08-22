@@ -281,6 +281,8 @@ extern void aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
 extern void aclcheck_error_col(AclResult aclerr, ObjectType objtype,
 							   const char *objectname, const char *colname);
 
+extern const char *privilege_to_string(AclMode privilege);
+
 extern void aclcheck_error_type(AclResult aclerr, Oid typeOid);
 
 extern void recordExtObjInitPriv(Oid objoid, Oid classoid);
