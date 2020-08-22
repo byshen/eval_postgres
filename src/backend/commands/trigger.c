@@ -344,16 +344,16 @@ CreateTrigger(CreateTrigStmt *stmt, const char *queryString,
 		aclresult = pg_class_aclcheck(RelationGetRelid(rel), GetUserId(),
 									  ACL_TRIGGER);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
-						   RelationGetRelationName(rel));
+			aclcheck_error_priv(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
+						   RelationGetRelationName(rel), privilege_to_string(ACL_TRIGGER));
 
 		if (OidIsValid(constrrelid))
 		{
 			aclresult = pg_class_aclcheck(constrrelid, GetUserId(),
 										  ACL_TRIGGER);
 			if (aclresult != ACLCHECK_OK)
-				aclcheck_error(aclresult, get_relkind_objtype(get_rel_relkind(constrrelid)),
-							   get_rel_name(constrrelid));
+				aclcheck_error_priv(aclresult, get_relkind_objtype(get_rel_relkind(constrrelid)),
+							   get_rel_name(constrrelid), privilege_to_string(ACL_TRIGGER));
 		}
 	}
 

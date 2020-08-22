@@ -1943,8 +1943,8 @@ truncate_check_rel(Oid relid, Form_pg_class reltuple)
 	/* Permissions checks */
 	aclresult = pg_class_aclcheck(relid, GetUserId(), ACL_TRUNCATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, get_relkind_objtype(reltuple->relkind),
-					   relname);
+		aclcheck_error_priv(aclresult, get_relkind_objtype(reltuple->relkind),
+					   relname, privilege_to_string(ACL_TRUNCATE));
 
 	if (!allowSystemTableMods && IsSystemClass(relid, reltuple))
 		ereport(ERROR,
@@ -9704,8 +9704,8 @@ checkFkeyPermissions(Relation rel, int16 *attnums, int natts)
 		aclresult = pg_attribute_aclcheck(RelationGetRelid(rel), attnums[i],
 										  roleid, ACL_REFERENCES);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
-						   RelationGetRelationName(rel));
+			aclcheck_error_priv(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
+						   RelationGetRelationName(rel), privilege_to_string(ACL_REFERENCES));
 	}
 }
 

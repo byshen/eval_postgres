@@ -962,8 +962,8 @@ transformTableLikeClause(CreateStmtContext *cxt, TableLikeClause *table_like_cla
 		aclresult = pg_class_aclcheck(RelationGetRelid(relation), GetUserId(),
 									  ACL_SELECT);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, get_relkind_objtype(relation->rd_rel->relkind),
-						   RelationGetRelationName(relation));
+			aclcheck_error_priv(aclresult, get_relkind_objtype(relation->rd_rel->relkind),
+						   RelationGetRelationName(relation), privilege_to_string(ACL_SELECT));
 	}
 
 	tupleDesc = RelationGetDescr(relation);

@@ -372,8 +372,8 @@ currtid_byreloid(PG_FUNCTION_ARGS)
 	aclresult = pg_class_aclcheck(RelationGetRelid(rel), GetUserId(),
 								  ACL_SELECT);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
-					   RelationGetRelationName(rel));
+		aclcheck_error_priv(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
+					   RelationGetRelationName(rel), privilege_to_string(ACL_SELECT));
 
 	if (rel->rd_rel->relkind == RELKIND_VIEW)
 		return currtid_for_view(rel, tid);
@@ -409,8 +409,8 @@ currtid_byrelname(PG_FUNCTION_ARGS)
 	aclresult = pg_class_aclcheck(RelationGetRelid(rel), GetUserId(),
 								  ACL_SELECT);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
-					   RelationGetRelationName(rel));
+		aclcheck_error_priv(aclresult, get_relkind_objtype(rel->rd_rel->relkind),
+					   RelationGetRelationName(rel), privilege_to_string(ACL_SELECT));
 
 	if (rel->rd_rel->relkind == RELKIND_VIEW)
 		return currtid_for_view(rel, tid);
