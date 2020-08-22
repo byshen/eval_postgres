@@ -3398,7 +3398,7 @@ aclcheck_error(AclResult aclerr, ObjectType objtype,
 						msg = gettext_noop("permission denied for foreign table %s");
 						break;
 					case OBJECT_FUNCTION:
-						msg = gettext_noop("permission denied for function %s");
+						msg = gettext_noop("permission denied for function %s: %s privilege required for role %s"");
 						break;
 					case OBJECT_INDEX:
 						msg = gettext_noop("permission denied for index %s");
