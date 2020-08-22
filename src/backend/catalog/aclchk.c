@@ -3308,7 +3308,7 @@ string_to_privilege(const char *privname)
 	return 0;					/* appease compiler */
 }
 
-static const char *
+const char *
 privilege_to_string(AclMode privilege)
 {
 	switch (privilege)
