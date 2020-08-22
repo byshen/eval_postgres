@@ -3718,7 +3718,7 @@ aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
 						msg = gettext_noop("permission denied for routine %s");
 						break;
 					case OBJECT_SCHEMA:
-						msg = gettext_noop("permission denied for schema %s: %s privilege required");
+						msg = gettext_noop("permission denied for schema %s: %s privilege required for role %s");
 						break;
 					case OBJECT_SEQUENCE:
 						msg = gettext_noop("permission denied for sequence %s");
@@ -3768,9 +3768,17 @@ aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
 						elog(ERROR, "unsupported object type %d", objtype);
 				}
 
-				ereport(ERROR,
-						(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
-						 errmsg(msg, objectname, privilegename)));
+				char * rolename = GetUserNameFromId(GetUserId(), false);
+				if (rolename != NULL) {
+					ereport(ERROR,
+							(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
+							errmsg(msg, objectname, privilegename, rolename)));
+				} 
+				else {
+					ereport(ERROR,
+							(errcode(ERRCODE_INSUFFICIENT_PRIVILEGE),
+							errmsg(msg, objectname, privilegename)));		
+				}
 				break;
 			}
 		case ACLCHECK_NOT_OWNER:

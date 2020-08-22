@@ -278,10 +278,14 @@ extern void aclcheck_error(AclResult aclerr, ObjectType objtype,
 extern void aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
 			   const char *objectname, const char *privilegename);
 
+/* modify begin */
 extern void aclcheck_error_col(AclResult aclerr, ObjectType objtype,
 							   const char *objectname, const char *colname);
 
 extern const char *privilege_to_string(AclMode privilege);
+extern char *GetUserNameFromId(Oid roleid, bool noerr);
+/* modify end   */
+
 
 extern void aclcheck_error_type(AclResult aclerr, Oid typeOid);
 
