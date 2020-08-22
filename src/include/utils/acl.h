@@ -275,6 +275,9 @@ extern AclResult pg_type_aclcheck(Oid type_oid, Oid roleid, AclMode mode);
 extern void aclcheck_error(AclResult aclerr, ObjectType objtype,
 						   const char *objectname);
 
+extern void aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
+			   const char *objectname, const char *privilegename);
+
 extern void aclcheck_error_col(AclResult aclerr, ObjectType objtype,
 							   const char *objectname, const char *colname);
 

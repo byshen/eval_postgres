@@ -3718,7 +3718,7 @@ aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
 						msg = gettext_noop("permission denied for routine %s");
 						break;
 					case OBJECT_SCHEMA:
-						msg = gettext_noop("permission denied for schema %s");
+						msg = gettext_noop("permission denied for schema %s: %s privilege required");
 						break;
 					case OBJECT_SEQUENCE:
 						msg = gettext_noop("permission denied for sequence %s");
