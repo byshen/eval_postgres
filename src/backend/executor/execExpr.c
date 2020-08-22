@@ -960,8 +960,8 @@ ExecInitExprRec(Expr *node, ExprState *state,
 											 GetUserId(),
 											 ACL_EXECUTE);
 				if (aclresult != ACLCHECK_OK)
-					aclcheck_error(aclresult, OBJECT_FUNCTION,
-								   get_func_name(opexpr->opfuncid));
+					aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+								   get_func_name(opexpr->opfuncid), privilege_to_string(ACL_EXECUTE));
 				InvokeFunctionExecuteHook(opexpr->opfuncid);
 
 				/* Set up the primary fmgr lookup information */
@@ -2159,7 +2159,8 @@ ExecInitFunc(ExprEvalStep *scratch, Expr *node, List *args, Oid funcid,
 	/* Check permission to call function */
 	aclresult = pg_proc_aclcheck(funcid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_FUNCTION, get_func_name(funcid));
+		aclcheck_error_priv(aclresult, OBJECT_FUNCTION, 
+			get_func_name(funcid), privilege_to_string(ACL_EXECUTE));
 	InvokeFunctionExecuteHook(funcid);
 
 	/*
@@ -3388,7 +3389,8 @@ ExecBuildGroupingEqual(TupleDesc ldesc, TupleDesc rdesc,
 		/* Check permission to call function */
 		aclresult = pg_proc_aclcheck(foid, GetUserId(), ACL_EXECUTE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_FUNCTION, get_func_name(foid));
+			aclcheck_error_priv(aclresult, OBJECT_FUNCTION, 
+				get_func_name(foid), privilege_to_string(ACL_EXECUTE));
 
 		InvokeFunctionExecuteHook(foid);
 

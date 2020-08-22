@@ -695,8 +695,8 @@ CreateTrigger(CreateTrigStmt *stmt, const char *queryString,
 	{
 		aclresult = pg_proc_aclcheck(funcoid, GetUserId(), ACL_EXECUTE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_FUNCTION,
-						   NameListToString(stmt->funcname));
+			aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+						   NameListToString(stmt->funcname), privilege_to_string(ACL_EXECUTE));
 	}
 	funcrettype = get_func_rettype(funcoid);
 	if (funcrettype != TRIGGEROID)

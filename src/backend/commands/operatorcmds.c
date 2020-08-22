@@ -217,8 +217,8 @@ DefineOperator(List *names, List *parameters)
 	 */
 	aclresult = pg_proc_aclcheck(functionOid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_FUNCTION,
-					   NameListToString(functionName));
+		aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+					   NameListToString(functionName), privilege_to_string(ACL_EXECUTE));
 
 	rettype = get_func_rettype(functionOid);
 	aclresult = pg_type_aclcheck(rettype, GetUserId(), ACL_USAGE);
@@ -283,8 +283,8 @@ ValidateRestrictionEstimator(List *restrictionName)
 	/* Require EXECUTE rights for the estimator */
 	aclresult = pg_proc_aclcheck(restrictionOid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_FUNCTION,
-					   NameListToString(restrictionName));
+		aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+					   NameListToString(restrictionName), privilege_to_string(ACL_EXECUTE));
 
 	return restrictionOid;
 }
@@ -329,8 +329,8 @@ ValidateJoinEstimator(List *joinName)
 	/* Require EXECUTE rights for the estimator */
 	aclresult = pg_proc_aclcheck(joinOid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_FUNCTION,
-					   NameListToString(joinName));
+		aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+					   NameListToString(joinName), privilege_to_string(ACL_EXECUTE));
 
 	return joinOid;
 }

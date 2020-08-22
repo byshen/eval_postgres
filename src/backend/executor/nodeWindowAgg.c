@@ -2437,8 +2437,8 @@ ExecInitWindowAgg(WindowAgg *node, EState *estate, int eflags)
 		aclresult = pg_proc_aclcheck(wfunc->winfnoid, GetUserId(),
 									 ACL_EXECUTE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_FUNCTION,
-						   get_func_name(wfunc->winfnoid));
+			aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+						   get_func_name(wfunc->winfnoid), privilege_to_string(ACL_EXECUTE));
 		InvokeFunctionExecuteHook(wfunc->winfnoid);
 
 		/* Fill in the perfuncstate data */
@@ -2715,8 +2715,8 @@ initialize_peragg(WindowAggState *winstate, WindowFunc *wfunc,
 		aclresult = pg_proc_aclcheck(transfn_oid, aggOwner,
 									 ACL_EXECUTE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_FUNCTION,
-						   get_func_name(transfn_oid));
+			aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+						   get_func_name(transfn_oid), privilege_to_string(ACL_EXECUTE));
 		InvokeFunctionExecuteHook(transfn_oid);
 
 		if (OidIsValid(invtransfn_oid))
@@ -2724,8 +2724,8 @@ initialize_peragg(WindowAggState *winstate, WindowFunc *wfunc,
 			aclresult = pg_proc_aclcheck(invtransfn_oid, aggOwner,
 										 ACL_EXECUTE);
 			if (aclresult != ACLCHECK_OK)
-				aclcheck_error(aclresult, OBJECT_FUNCTION,
-							   get_func_name(invtransfn_oid));
+				aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+							   get_func_name(invtransfn_oid), privilege_to_string(ACL_EXECUTE));
 			InvokeFunctionExecuteHook(invtransfn_oid);
 		}
 
@@ -2734,8 +2734,8 @@ initialize_peragg(WindowAggState *winstate, WindowFunc *wfunc,
 			aclresult = pg_proc_aclcheck(finalfn_oid, aggOwner,
 										 ACL_EXECUTE);
 			if (aclresult != ACLCHECK_OK)
-				aclcheck_error(aclresult, OBJECT_FUNCTION,
-							   get_func_name(finalfn_oid));
+				aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+							   get_func_name(finalfn_oid), privilege_to_string(ACL_EXECUTE));
 			InvokeFunctionExecuteHook(finalfn_oid);
 		}
 	}

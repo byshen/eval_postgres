@@ -2699,16 +2699,16 @@ ExecInitAgg(Agg *node, EState *estate, int eflags)
 			aclresult = pg_proc_aclcheck(transfn_oid, aggOwner,
 										 ACL_EXECUTE);
 			if (aclresult != ACLCHECK_OK)
-				aclcheck_error(aclresult, OBJECT_FUNCTION,
-							   get_func_name(transfn_oid));
+				aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+							   get_func_name(transfn_oid), privilege_to_string(ACL_EXECUTE));
 			InvokeFunctionExecuteHook(transfn_oid);
 			if (OidIsValid(finalfn_oid))
 			{
 				aclresult = pg_proc_aclcheck(finalfn_oid, aggOwner,
 											 ACL_EXECUTE);
 				if (aclresult != ACLCHECK_OK)
-					aclcheck_error(aclresult, OBJECT_FUNCTION,
-								   get_func_name(finalfn_oid));
+					aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+								   get_func_name(finalfn_oid), privilege_to_string(ACL_EXECUTE));
 				InvokeFunctionExecuteHook(finalfn_oid);
 			}
 			if (OidIsValid(serialfn_oid))
@@ -2716,8 +2716,8 @@ ExecInitAgg(Agg *node, EState *estate, int eflags)
 				aclresult = pg_proc_aclcheck(serialfn_oid, aggOwner,
 											 ACL_EXECUTE);
 				if (aclresult != ACLCHECK_OK)
-					aclcheck_error(aclresult, OBJECT_FUNCTION,
-								   get_func_name(serialfn_oid));
+					aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+								   get_func_name(serialfn_oid), privilege_to_string(ACL_EXECUTE));
 				InvokeFunctionExecuteHook(serialfn_oid);
 			}
 			if (OidIsValid(deserialfn_oid))
@@ -2725,8 +2725,8 @@ ExecInitAgg(Agg *node, EState *estate, int eflags)
 				aclresult = pg_proc_aclcheck(deserialfn_oid, aggOwner,
 											 ACL_EXECUTE);
 				if (aclresult != ACLCHECK_OK)
-					aclcheck_error(aclresult, OBJECT_FUNCTION,
-								   get_func_name(deserialfn_oid));
+					aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+								   get_func_name(deserialfn_oid), privilege_to_string(ACL_EXECUTE));
 				InvokeFunctionExecuteHook(deserialfn_oid);
 			}
 		}

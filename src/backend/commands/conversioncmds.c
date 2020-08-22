@@ -89,8 +89,8 @@ CreateConversionCommand(CreateConversionStmt *stmt)
 	/* Check we have EXECUTE rights for the function */
 	aclresult = pg_proc_aclcheck(funcoid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_FUNCTION,
-					   NameListToString(func_name));
+		aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+					   NameListToString(func_name), privilege_to_string(ACL_EXECUTE));
 
 	/*
 	 * Check that the conversion function is suitable for the requested source

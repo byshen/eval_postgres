@@ -1949,7 +1949,8 @@ CreateTransform(CreateTransformStmt *stmt)
 
 		aclresult = pg_proc_aclcheck(fromsqlfuncid, GetUserId(), ACL_EXECUTE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_FUNCTION, NameListToString(stmt->fromsql->objname));
+			aclcheck_error_priv(aclresult, OBJECT_FUNCTION, 
+			NameListToString(stmt->fromsql->objname), privilege_to_string(ACL_EXECUTE));
 
 		tuple = SearchSysCache1(PROCOID, ObjectIdGetDatum(fromsqlfuncid));
 		if (!HeapTupleIsValid(tuple))
@@ -1975,7 +1976,8 @@ CreateTransform(CreateTransformStmt *stmt)
 
 		aclresult = pg_proc_aclcheck(tosqlfuncid, GetUserId(), ACL_EXECUTE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_FUNCTION, NameListToString(stmt->tosql->objname));
+			aclcheck_error_priv(aclresult, OBJECT_FUNCTION, 
+				NameListToString(stmt->tosql->objname), privilege_to_string(ACL_EXECUTE));
 
 		tuple = SearchSysCache1(PROCOID, ObjectIdGetDatum(tosqlfuncid));
 		if (!HeapTupleIsValid(tuple))

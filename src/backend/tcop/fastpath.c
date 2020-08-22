@@ -321,8 +321,8 @@ HandleFunctionRequest(StringInfo msgBuf)
 
 	aclresult = pg_proc_aclcheck(fid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_FUNCTION,
-					   get_func_name(fid));
+		aclcheck_error_priv(aclresult, OBJECT_FUNCTION,
+					   get_func_name(fid), privilege_to_string(ACL_EXECUTE));
 	InvokeFunctionExecuteHook(fid);
 
 	/*

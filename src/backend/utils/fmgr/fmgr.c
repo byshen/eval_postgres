@@ -2047,7 +2047,8 @@ CheckFunctionValidatorAccess(Oid validatorOid, Oid functionOid)
 	 */
 	aclresult = pg_proc_aclcheck(functionOid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_FUNCTION, NameStr(procStruct->proname));
+		aclcheck_error_priv(aclresult, OBJECT_FUNCTION, 
+			NameStr(procStruct->proname), privilege_to_string(ACL_EXECUTE));
 
 	ReleaseSysCache(procTup);
 	ReleaseSysCache(langTup);
