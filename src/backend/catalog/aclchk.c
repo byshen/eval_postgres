@@ -3398,7 +3398,7 @@ aclcheck_error(AclResult aclerr, ObjectType objtype,
 						msg = gettext_noop("permission denied for foreign table %s");
 						break;
 					case OBJECT_FUNCTION:
-						msg = gettext_noop("permission denied for function %s: %s privilege required for role %s");
+						msg = gettext_noop("permission denied for function %s, %s privilege required for role %s");
 						break;
 					case OBJECT_INDEX:
 						msg = gettext_noop("permission denied for index %s");
@@ -3649,103 +3649,103 @@ aclcheck_error_priv(AclResult aclerr, ObjectType objtype,
 				switch (objtype)
 				{
 					case OBJECT_AGGREGATE:
-						msg = gettext_noop("permission denied for aggregate %s");
+						msg = gettext_noop("permission denied for aggregate %s, %s privilege required for role %s");
 						break;
 					case OBJECT_COLLATION:
-						msg = gettext_noop("permission denied for collation %s");
+						msg = gettext_noop("permission denied for collation %s, %s privilege required for role %s");
 						break;
 					case OBJECT_COLUMN:
-						msg = gettext_noop("permission denied for column %s");
+						msg = gettext_noop("permission denied for column %s, %s privilege required for role %s");
 						break;
 					case OBJECT_CONVERSION:
-						msg = gettext_noop("permission denied for conversion %s");
+						msg = gettext_noop("permission denied for conversion %s, %s privilege required for role %s");
 						break;
 					case OBJECT_DATABASE:
-						msg = gettext_noop("permission denied for database %s");
+						msg = gettext_noop("permission denied for database %s, %s privilege required for role %s");
 						break;
 					case OBJECT_DOMAIN:
-						msg = gettext_noop("permission denied for domain %s");
+						msg = gettext_noop("permission denied for domain %s, %s privilege required for role %s");
 						break;
 					case OBJECT_EVENT_TRIGGER:
-						msg = gettext_noop("permission denied for event trigger %s");
+						msg = gettext_noop("permission denied for event trigger %s, %s privilege required for role %s");
 						break;
 					case OBJECT_EXTENSION:
-						msg = gettext_noop("permission denied for extension %s");
+						msg = gettext_noop("permission denied for extension %s, %s privilege required for role %s");
 						break;
 					case OBJECT_FDW:
-						msg = gettext_noop("permission denied for foreign-data wrapper %s");
+						msg = gettext_noop("permission denied for foreign-data wrapper %s, %s privilege required for role %s");
 						break;
 					case OBJECT_FOREIGN_SERVER:
-						msg = gettext_noop("permission denied for foreign server %s");
+						msg = gettext_noop("permission denied for foreign server %s, %s privilege required for role %s");
 						break;
 					case OBJECT_FOREIGN_TABLE:
-						msg = gettext_noop("permission denied for foreign table %s");
+						msg = gettext_noop("permission denied for foreign table %s, %s privilege required for role %s");
 						break;
 					case OBJECT_FUNCTION:
-						msg = gettext_noop("permission denied for function %s");
+						msg = gettext_noop("permission denied for function %s, %s privilege required for role %s");
 						break;
 					case OBJECT_INDEX:
-						msg = gettext_noop("permission denied for index %s");
+						msg = gettext_noop("permission denied for index %s, %s privilege required for role %s");
 						break;
 					case OBJECT_LANGUAGE:
-						msg = gettext_noop("permission denied for language %s");
+						msg = gettext_noop("permission denied for language %s, %s privilege required for role %s");
 						break;
 					case OBJECT_LARGEOBJECT:
-						msg = gettext_noop("permission denied for large object %s");
+						msg = gettext_noop("permission denied for large object %s, %s privilege required for role %s");
 						break;
 					case OBJECT_MATVIEW:
-						msg = gettext_noop("permission denied for materialized view %s");
+						msg = gettext_noop("permission denied for materialized view %s, %s privilege required for role %s");
 						break;
 					case OBJECT_OPCLASS:
-						msg = gettext_noop("permission denied for operator class %s");
+						msg = gettext_noop("permission denied for operator class %s, %s privilege required for role %s");
 						break;
 					case OBJECT_OPERATOR:
-						msg = gettext_noop("permission denied for operator %s");
+						msg = gettext_noop("permission denied for operator %s, %s privilege required for role %s");
 						break;
 					case OBJECT_OPFAMILY:
-						msg = gettext_noop("permission denied for operator family %s");
+						msg = gettext_noop("permission denied for operator family %s, %s privilege required for role %s");
 						break;
 					case OBJECT_POLICY:
-						msg = gettext_noop("permission denied for policy %s");
+						msg = gettext_noop("permission denied for policy %s, %s privilege required for role %s");
 						break;
 					case OBJECT_PROCEDURE:
-						msg = gettext_noop("permission denied for procedure %s");
+						msg = gettext_noop("permission denied for procedure %s, %s privilege required for role %s");
 						break;
 					case OBJECT_PUBLICATION:
-						msg = gettext_noop("permission denied for publication %s");
+						msg = gettext_noop("permission denied for publication %s, %s privilege required for role %s");
 						break;
 					case OBJECT_ROUTINE:
-						msg = gettext_noop("permission denied for routine %s");
+						msg = gettext_noop("permission denied for routine %s, %s privilege required for role %s");
 						break;
 					case OBJECT_SCHEMA:
-						msg = gettext_noop("permission denied for schema %s: %s privilege required for role %s");
+						msg = gettext_noop("permission denied for schema %s, %s privilege required for role %s");
 						break;
 					case OBJECT_SEQUENCE:
-						msg = gettext_noop("permission denied for sequence %s");
+						msg = gettext_noop("permission denied for sequence %s, %s privilege required for role %s");
 						break;
 					case OBJECT_STATISTIC_EXT:
-						msg = gettext_noop("permission denied for statistics object %s");
+						msg = gettext_noop("permission denied for statistics object %s, %s privilege required for role %s");
 						break;
 					case OBJECT_SUBSCRIPTION:
-						msg = gettext_noop("permission denied for subscription %s");
+						msg = gettext_noop("permission denied for subscription %s, %s privilege required for role %s");
 						break;
 					case OBJECT_TABLE:
-						msg = gettext_noop("permission denied for table %s");
+						msg = gettext_noop("permission denied for table %s, %s privilege required for role %s");
 						break;
 					case OBJECT_TABLESPACE:
-						msg = gettext_noop("permission denied for tablespace %s");
+						msg = gettext_noop("permission denied for tablespace %s, %s privilege required for role %s");
 						break;
 					case OBJECT_TSCONFIGURATION:
-						msg = gettext_noop("permission denied for text search configuration %s");
+						msg = gettext_noop("permission denied for text search configuration %s, %s privilege required for role %s");
 						break;
 					case OBJECT_TSDICTIONARY:
-						msg = gettext_noop("permission denied for text search dictionary %s");
+						msg = gettext_noop("permission denied for text search dictionary %s, %s privilege required for role %s");
 						break;
 					case OBJECT_TYPE:
-						msg = gettext_noop("permission denied for type %s");
+						msg = gettext_noop("permission denied for type %s, %s privilege required for role %s");
 						break;
 					case OBJECT_VIEW:
-						msg = gettext_noop("permission denied for view %s");
+						msg = gettext_noop("permission denied for view %s, %s privilege required for role %s");
 						break;
 						/* these currently aren't used */
 					case OBJECT_ACCESS_METHOD:
