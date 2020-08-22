@@ -1269,7 +1269,7 @@ check_temp_tablespaces(char **newval, void **extra, GucSource source)
 			if (aclresult != ACLCHECK_OK)
 			{
 				if (source >= PGC_S_INTERACTIVE)
-					aclcheck_error(aclresult, OBJECT_TABLESPACE, curname);
+					aclcheck_error_priv(aclresult, OBJECT_TABLESPACE, curname, privilege_to_string(ACL_CREATE));
 				continue;
 			}
 

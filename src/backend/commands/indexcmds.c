@@ -683,8 +683,8 @@ DefineIndex(Oid relationId,
 		aclresult = pg_tablespace_aclcheck(tablespaceId, GetUserId(),
 										   ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_TABLESPACE,
-						   get_tablespace_name(tablespaceId));
+			aclcheck_error_priv(aclresult, OBJECT_TABLESPACE,
+						   get_tablespace_name(tablespaceId), privilege_to_string(ACL_CREATE));
 	}
 
 	/*

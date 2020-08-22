@@ -155,8 +155,8 @@ CreatePublication(CreatePublicationStmt *stmt)
 	/* must have CREATE privilege on database */
 	aclresult = pg_database_aclcheck(MyDatabaseId, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_DATABASE,
-					   get_database_name(MyDatabaseId));
+		aclcheck_error_priv(aclresult, OBJECT_DATABASE,
+					   get_database_name(MyDatabaseId), privilege_to_string(ACL_CREATE));
 
 	/* FOR ALL TABLES requires superuser */
 	if (stmt->for_all_tables && !superuser())
@@ -682,8 +682,8 @@ AlterPublicationOwner_internal(Relation rel, HeapTuple tup, Oid newOwnerId)
 		/* New owner must have CREATE privilege on database */
 		aclresult = pg_database_aclcheck(MyDatabaseId, newOwnerId, ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_DATABASE,
-						   get_database_name(MyDatabaseId));
+			aclcheck_error_priv(aclresult, OBJECT_DATABASE,
+						   get_database_name(MyDatabaseId), privilege_to_string(ACL_CREATE));
 
 		if (form->puballtables && !superuser_arg(newOwnerId))
 			ereport(ERROR,

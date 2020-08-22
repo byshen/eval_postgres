@@ -2609,8 +2609,8 @@ ExecInitAgg(Agg *node, EState *estate, int eflags)
 		aclresult = pg_proc_aclcheck(aggref->aggfnoid, GetUserId(),
 									 ACL_EXECUTE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_AGGREGATE,
-						   get_func_name(aggref->aggfnoid));
+			aclcheck_error_priv(aclresult, OBJECT_AGGREGATE,
+						   get_func_name(aggref->aggfnoid), privilege_to_string(ACL_EXECUTE));
 		InvokeFunctionExecuteHook(aggref->aggfnoid);
 
 		/* planner recorded transition state type in the Aggref itself */

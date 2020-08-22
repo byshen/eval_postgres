@@ -1004,8 +1004,8 @@ CreateFunction(ParseState *pstate, CreateFunctionStmt *stmt)
 
 		aclresult = pg_language_aclcheck(languageOid, GetUserId(), ACL_USAGE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_LANGUAGE,
-						   NameStr(languageStruct->lanname));
+			aclcheck_error_priv(aclresult, OBJECT_LANGUAGE,
+						   NameStr(languageStruct->lanname), privilege_to_string(ACL_USAGE));
 	}
 	else
 	{
@@ -1935,7 +1935,7 @@ CreateTransform(CreateTransformStmt *stmt)
 
 	aclresult = pg_language_aclcheck(langid, GetUserId(), ACL_USAGE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_LANGUAGE, stmt->lang);
+		aclcheck_error_priv(aclresult, OBJECT_LANGUAGE, stmt->lang, privilege_to_string(ACL_USAGE));
 
 	/*
 	 * Get the functions
@@ -2243,8 +2243,8 @@ ExecuteDoStmt(DoStmt *stmt, bool atomic)
 		aclresult = pg_language_aclcheck(codeblock->langOid, GetUserId(),
 										 ACL_USAGE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_LANGUAGE,
-						   NameStr(languageStruct->lanname));
+			aclcheck_error_priv(aclresult, OBJECT_LANGUAGE,
+						   NameStr(languageStruct->lanname), privilege_to_string(ACL_USAGE));
 	}
 	else
 	{
@@ -2319,7 +2319,8 @@ ExecuteCallStmt(CallStmt *stmt, ParamListInfo params, bool atomic, DestReceiver 
 
 	aclresult = pg_proc_aclcheck(fexpr->funcid, GetUserId(), ACL_EXECUTE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_PROCEDURE, get_func_name(fexpr->funcid));
+		aclcheck_error_priv(aclresult, OBJECT_PROCEDURE, 
+			get_func_name(fexpr->funcid), privilege_to_string(ACL_EXECUTE));
 
 	/* Prep the context object we'll pass to the procedure */
 	callcontext = makeNode(CallContext);

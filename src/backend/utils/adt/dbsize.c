@@ -97,8 +97,8 @@ calculate_database_size(Oid dbOid)
 	if (aclresult != ACLCHECK_OK &&
 		!is_member_of_role(GetUserId(), DEFAULT_ROLE_READ_ALL_STATS))
 	{
-		aclcheck_error(aclresult, OBJECT_DATABASE,
-					   get_database_name(dbOid));
+		aclcheck_error_priv(aclresult, OBJECT_DATABASE,
+					   get_database_name(dbOid), privilege_to_string(ACL_CONNECT));
 	}
 
 	/* Shared storage in pg_global is not counted */
@@ -183,8 +183,8 @@ calculate_tablespace_size(Oid tblspcOid)
 	{
 		aclresult = pg_tablespace_aclcheck(tblspcOid, GetUserId(), ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_TABLESPACE,
-						   get_tablespace_name(tblspcOid));
+			aclcheck_error_priv(aclresult, OBJECT_TABLESPACE,
+						   get_tablespace_name(tblspcOid), privilege_to_string(ACL_CREATE));
 	}
 
 	if (tblspcOid == DEFAULTTABLESPACE_OID)

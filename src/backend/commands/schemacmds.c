@@ -94,8 +94,8 @@ CreateSchemaCommand(CreateSchemaStmt *stmt, const char *queryString,
 	 */
 	aclresult = pg_database_aclcheck(MyDatabaseId, saved_uid, ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_DATABASE,
-					   get_database_name(MyDatabaseId));
+		aclcheck_error_priv(aclresult, OBJECT_DATABASE,
+					   get_database_name(MyDatabaseId), privilege_to_string(ACL_CREATE));
 
 	check_is_member_of_role(saved_uid, owner_uid);
 
@@ -273,8 +273,8 @@ RenameSchema(const char *oldname, const char *newname)
 	/* must have CREATE privilege on database */
 	aclresult = pg_database_aclcheck(MyDatabaseId, GetUserId(), ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_DATABASE,
-					   get_database_name(MyDatabaseId));
+		aclcheck_error_priv(aclresult, OBJECT_DATABASE,
+					   get_database_name(MyDatabaseId), privilege_to_string(ACL_CREATE));
 
 	if (!allowSystemTableMods && IsReservedName(newname))
 		ereport(ERROR,
@@ -395,8 +395,8 @@ AlterSchemaOwner_internal(HeapTuple tup, Relation rel, Oid newOwnerId)
 		aclresult = pg_database_aclcheck(MyDatabaseId, GetUserId(),
 										 ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_DATABASE,
-						   get_database_name(MyDatabaseId));
+			aclcheck_error_priv(aclresult, OBJECT_DATABASE,
+						   get_database_name(MyDatabaseId), privilege_to_string(ACL_CREATE));
 
 		memset(repl_null, false, sizeof(repl_null));
 		memset(repl_repl, false, sizeof(repl_repl));

@@ -2816,7 +2816,8 @@ get_connect_string(const char *servername)
 		/* Check permissions, user must have usage on the server. */
 		aclresult = pg_foreign_server_aclcheck(serverid, userid, ACL_USAGE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_FOREIGN_SERVER, foreign_server->servername);
+			aclcheck_error_priv(aclresult, OBJECT_FOREIGN_SERVER, 
+				foreign_server->servername, privilege_to_string(ACL_USAGE));
 
 		foreach(cell, fdw->options)
 		{

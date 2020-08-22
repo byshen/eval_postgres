@@ -703,8 +703,8 @@ DefineRelation(CreateStmt *stmt, char relkind, Oid ownerId,
 		aclresult = pg_tablespace_aclcheck(tablespaceId, GetUserId(),
 										   ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_TABLESPACE,
-						   get_tablespace_name(tablespaceId));
+			aclcheck_error_priv(aclresult, OBJECT_TABLESPACE,
+						   get_tablespace_name(tablespaceId), privilege_to_string(ACL_CREATE));
 	}
 
 	/* In all cases disallow placing user relations in pg_global */
@@ -12178,7 +12178,7 @@ ATPrepSetTableSpace(AlteredTableInfo *tab, Relation rel, const char *tablespacen
 
 		aclresult = pg_tablespace_aclcheck(tablespaceId, GetUserId(), ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_TABLESPACE, tablespacename);
+			aclcheck_error_priv(aclresult, OBJECT_TABLESPACE, tablespacename, privilege_to_string(ACL_CREATE));
 	}
 
 	/* Save info for Phase 3 to do the real work */
@@ -12643,8 +12643,8 @@ AlterTableMoveAll(AlterTableMoveAllStmt *stmt)
 		aclresult = pg_tablespace_aclcheck(new_tablespaceoid, GetUserId(),
 										   ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_TABLESPACE,
-						   get_tablespace_name(new_tablespaceoid));
+			aclcheck_error_priv(aclresult, OBJECT_TABLESPACE,
+						   get_tablespace_name(new_tablespaceoid), privilege_to_string(ACL_CREATE));
 	}
 
 	/*

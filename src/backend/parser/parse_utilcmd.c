@@ -954,8 +954,8 @@ transformTableLikeClause(CreateStmtContext *cxt, TableLikeClause *table_like_cla
 		aclresult = pg_type_aclcheck(relation->rd_rel->reltype, GetUserId(),
 									 ACL_USAGE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_TYPE,
-						   RelationGetRelationName(relation));
+			aclcheck_error_priv(aclresult, OBJECT_TYPE,
+						   RelationGetRelationName(relation), privilege_to_string(ACL_USAGE));
 	}
 	else
 	{

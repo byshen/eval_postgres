@@ -2037,8 +2037,8 @@ CheckFunctionValidatorAccess(Oid validatorOid, Oid functionOid)
 	aclresult = pg_language_aclcheck(procStruct->prolang, GetUserId(),
 									 ACL_USAGE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_LANGUAGE,
-					   NameStr(langStruct->lanname));
+		aclcheck_error_priv(aclresult, OBJECT_LANGUAGE,
+					   NameStr(langStruct->lanname), privilege_to_string(ACL_USAGE));
 
 	/*
 	 * Check whether we are allowed to execute the function itself. If we can

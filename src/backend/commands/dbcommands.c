@@ -423,8 +423,8 @@ createdb(ParseState *pstate, const CreatedbStmt *stmt)
 		aclresult = pg_tablespace_aclcheck(dst_deftablespace, GetUserId(),
 										   ACL_CREATE);
 		if (aclresult != ACLCHECK_OK)
-			aclcheck_error(aclresult, OBJECT_TABLESPACE,
-						   tablespacename);
+			aclcheck_error_priv(aclresult, OBJECT_TABLESPACE,
+						   tablespacename, privilege_to_string(ACL_CREATE));
 
 		/* pg_global must never be the default tablespace */
 		if (dst_deftablespace == GLOBALTABLESPACE_OID)
@@ -1155,8 +1155,8 @@ movedb(const char *dbname, const char *tblspcname)
 	aclresult = pg_tablespace_aclcheck(dst_tblspcoid, GetUserId(),
 									   ACL_CREATE);
 	if (aclresult != ACLCHECK_OK)
-		aclcheck_error(aclresult, OBJECT_TABLESPACE,
-					   tblspcname);
+		aclcheck_error_priv(aclresult, OBJECT_TABLESPACE,
+					   tblspcname, privilege_to_string(ACL_CREATE));
 
 	/*
 	 * pg_global must never be the default tablespace
